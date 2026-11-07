@@ -281,7 +281,7 @@ export function printHelp(extensionFlags?: ExtensionFlag[]): void {
 					})
 					.join("\n")}\n`
 			: "";
-	console.log(`${chalk.bold(APP_NAME)} - AI coding assistant with read, bash, edit, write tools
+	console.log(`${chalk.bold(APP_NAME)} - AI coding assistant with coding and Trace audit tools
 
 ${chalk.bold("Usage:")}
   ${APP_NAME} [options] [--] [@files...] [messages...]
@@ -466,6 +466,10 @@ ${chalk.bold("Environment Variables:")}
   PI_SELF_UPDATE_COMMAND           - Command pi update runs to update pi itself ({packageName}, {version}, {installSpec})
   PI_TELEMETRY                     - Override install telemetry when set to 1/true/yes or 0/false/no
   PI_SHARE_VIEWER_URL              - Base URL for /share command (default: https://pi.dev/session/)
+  AUDIT_DATA_DIR                   - Audit evidence, indexes, model cache, and language servers
+  AUDIT_LSP_SERVERS                - JSON language-to-command overrides for semantic tools
+  GITHUB_PROXY                     - GitHub proxy (default: http://127.0.0.1:7890)
+  AUDIT_EMBED_PROXY                - Embedding download proxy (empty for direct access)
 
 ${chalk.bold("Built-in Tool Names:")}
   read       - Read file contents
@@ -476,5 +480,12 @@ ${chalk.bold("Built-in Tool Names:")}
   grep       - Search file contents (read-only, off by default)
   find       - Find files by glob pattern (read-only, off by default)
   ls         - List directory contents (read-only, off by default)
+
+${chalk.bold("Trace Audit Tools (builtin:trace-audit, enabled by default):")}
+  project_overview, code_outline, read_symbol, find_references,
+  semantic_references, build_call_graph, query_call_graph, semantic_search,
+  git_refs, git_history, git_patch, search_fix_sources, read_fix_source,
+  verify_fix_source, check_fix_applicability, compare_patch,
+  run_command, record_finding, audit_notes
 `);
 }

@@ -10,7 +10,9 @@
 
 > New issues and PRs from new contributors are closed automatically. Maintainers review closed submissions daily. See [CONTRIBUTING.md](https://github.com/earendil-works/pi/blob/main/CONTRIBUTING.md).
 
-# Pi
+# Trace Pi
+
+Trace Pi is a source fork of Pi with 19 audit tools from Trace. The CLI executable is `trace-pi`. Model configuration, sessions, extensions, and the terminal interface use Pi's native runtime. See [Trace audit tools](docs/trace-audit.md) for tool names, persisted evidence, and language-server setup.
 
 Pi is a minimal, extensible agent harness that you can make your own.
 
@@ -22,38 +24,27 @@ Use Pi [interactively](docs/usage.md), automate it in [print or JSON mode](docs/
 
 ## Getting started
 
-Install the command-line interface:
+Use Node.js 22.19 or newer. From this fork's repository root:
 
 ```bash
-curl -fsSL https://pi.dev/install.sh | sh
+npm ci --ignore-scripts
+npm run hydrate:model-data
+npm run build:offline
+npm rebuild --ignore-scripts @earendil-works/pi-coding-agent
+./node_modules/.bin/trace-pi
 ```
 
-On Windows:
-
-```shell
-powershell -c "irm https://pi.dev/install.ps1 | iex"
-```
-
-The installer pins all dependencies and updates Pi with `pi update`. Alternatively, install directly with npm, which does not pin transitive dependencies:
+To install the local checkout's executable on your PATH:
 
 ```bash
-npm install -g --ignore-scripts @earendil-works/pi-coding-agent
-```
-
-Pi requires Node.js 22.19 or newer. The macOS, Linux, and Windows installers can install it if needed. Pi does not require dependency lifecycle scripts for a normal npm installation.
-
-On macOS and Linux, Nix users can install the latest release with `nix profile add github:earendil-works/pi/stable`. See the [quickstart](docs/quickstart.md#1-install-pi) for updating and pinning releases.
-
-Start Pi in the directory where you want it to work:
-
-```bash
+npm link --ignore-scripts --workspace @earendil-works/pi-coding-agent
 cd /path/to/project
-pi
+trace-pi
 ```
 
-For a built-in AI provider, run `/login` inside Pi to connect a subscription or API key. Then give Pi a task.
+For development, run `./trace-pi` from the repository root, or call that script by absolute path from the project to audit. It preserves the caller's working directory and runs the TypeScript sources.
 
-See the [documentation](docs/index.md) for full setup and usage instructions.
+Use `/login` or the native Pi model configuration to select a provider. The 19 audit tools load by default through `builtin:trace-audit`. The usual `--tools`, `--exclude-tools`, and `--no-extensions` controls apply.
 
 ## Share your OSS coding agent sessions
 

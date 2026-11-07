@@ -3,8 +3,10 @@ import codemodeExtension from "./codemode/index.ts";
 import llamaExtension from "./llama/index.ts";
 import mcpExtension from "./mcp/index.ts";
 import toolSearchExtension from "./tool-search/index.ts";
+import traceAuditExtension from "./trace-audit/index.ts";
 
 export const builtInExtensions: InlineExtension[] = [
+	{ name: "trace-audit", factory: traceAuditExtension, builtin: true },
 	{ name: "llama.cpp", factory: llamaExtension, builtin: true },
 	// Replaceable: an extension that registers `codemode`, `tool_search`, or `/mcp` (such as a third-party
 	// MCP extension) takes over instead of running alongside the built-in one.

@@ -92,7 +92,7 @@ let
   };
 in
 stdenv.mkDerivation {
-  pname = "pi";
+  pname = "trace-pi";
   inherit (packageJson) version;
   src = installLock;
   inherit npmDeps;
@@ -124,7 +124,7 @@ stdenv.mkDerivation {
     # find npm for package installs; append it so that shells started by the
     # bash tool keep the user's node/npm (e.g. from mise or nvm). fd, ripgrep,
     # and the clipboard tools are Pi's own dependencies and take precedence.
-    makeWrapper ${nodejs}/bin/node "$out/bin/pi" \
+    makeWrapper ${nodejs}/bin/node "$out/bin/trace-pi" \
       --add-flags "$out/lib/pi/node_modules/@earendil-works/pi-coding-agent/dist/bundle/cli.js" \
       --suffix PATH : ${lib.makeBinPath [ nodejs ]} \
       --prefix PATH : ${
@@ -146,7 +146,7 @@ stdenv.mkDerivation {
   doInstallCheck = true;
   installCheckPhase = ''
     runHook preInstallCheck
-    test "$("$out/bin/pi" --version)" = "${packageJson.version}"
+    test "$("$out/bin/trace-pi" --version)" = "${packageJson.version}"
     # Load host-platform TUI helpers directly so missing native dependencies
     # fail the build rather than silently disabling clipboard support.
     ${nodejs}/bin/node -e \
@@ -167,7 +167,7 @@ stdenv.mkDerivation {
     description = packageJson.description;
     homepage = "https://pi.dev";
     license = lib.licenses.mit;
-    mainProgram = "pi";
+    mainProgram = "trace-pi";
     platforms = [
       "aarch64-darwin"
       "aarch64-linux"

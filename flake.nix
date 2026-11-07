@@ -1,5 +1,5 @@
 {
-  description = "Pi coding agent";
+  description = "Trace Pi coding and audit agent";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -35,20 +35,20 @@
     {
       packages = forAllSystems (system: {
         default = packageFor system;
-        pi = packageFor system;
+        "trace-pi" = packageFor system;
       });
 
       apps = forAllSystems (system: {
         default = {
           type = "app";
-          program = "${self.packages.${system}.default}/bin/pi";
-          meta.description = "Pi coding agent";
+          program = "${self.packages.${system}.default}/bin/trace-pi";
+          meta.description = "Trace Pi coding and audit agent";
         };
-        pi = self.apps.${system}.default;
+        "trace-pi" = self.apps.${system}.default;
       });
 
       overlays.default = final: _previous: {
-        pi = final.callPackage ./nix/package.nix { source = self; };
+        "trace-pi" = final.callPackage ./nix/package.nix { source = self; };
       };
     };
 }

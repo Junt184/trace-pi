@@ -505,6 +505,16 @@ export function getBundledInteractiveAssetPath(name: string): string {
 	return join(getInteractiveAssetsDir(), name);
 }
 
+/** Resolve the audit workers and language-server setup assets in every distribution. */
+export function getAuditAssetsDir(): string {
+	return join(getPackageDir(), "audit-assets");
+}
+
+/** Audit indexes, models, servers, and evidence live outside the audited worktree. */
+export function getAuditDataDir(): string {
+	return process.env.AUDIT_DATA_DIR ? expandTildePath(process.env.AUDIT_DATA_DIR) : join(getAgentDir(), "audit");
+}
+
 let quickJSWasmPath: string | undefined;
 
 /** Called by the Bun entry with the path of the QuickJS wasm file embedded in the compiled executable. */
@@ -607,8 +617,9 @@ export const CONFIG_DIR_NAME: string = pkg.piConfig?.configDir || ".pi";
 export const VERSION: string = pkg.version || "0.0.0";
 
 // e.g., PI_CODING_AGENT_DIR or TAU_CODING_AGENT_DIR
-export const ENV_AGENT_DIR = `${APP_NAME.toUpperCase()}_CODING_AGENT_DIR`;
-export const ENV_SESSION_DIR = `${APP_NAME.toUpperCase()}_CODING_AGENT_SESSION_DIR`;
+const envPrefix = APP_NAME.toUpperCase().replace(/[^A-Z0-9_]/g, "_");
+export const ENV_AGENT_DIR = `${envPrefix}_CODING_AGENT_DIR`;
+export const ENV_SESSION_DIR = `${envPrefix}_CODING_AGENT_SESSION_DIR`;
 
 export function expandTildePath(path: string): string {
 	return normalizePath(path);

@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import { APP_NAME } from "../src/config.ts";
 import type { Skill } from "../src/core/skills.ts";
 import { createSyntheticSourceInfo } from "../src/core/source-info.ts";
 import { buildSystemPrompt } from "../src/core/system-prompt.ts";
@@ -48,9 +49,9 @@ describe("buildSystemPrompt", () => {
 				skills: [],
 			});
 
-			expect(defaultPrompt.startsWith("You are a coding assistant running inside pi, a coding agent harness.")).toBe(
-				true,
-			);
+			expect(
+				defaultPrompt.startsWith(`You are a coding assistant running inside ${APP_NAME}, a coding agent harness.`),
+			).toBe(true);
 			expect(customPrompt.startsWith("You are Exact.\n\n<cwd>")).toBe(true);
 		});
 

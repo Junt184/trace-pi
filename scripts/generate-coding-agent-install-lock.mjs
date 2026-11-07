@@ -17,6 +17,9 @@ const installPackageName = "@earendil-works/pi-coding-agent-install";
 const allowedInstallScriptPackages = new Map([
 	["@google/genai@2.21.0", "preinstall is a no-op in the published package"],
 	["protobufjs@7.6.6", "postinstall only warns about protobufjs version scheme mismatches"],
+	["protobufjs@8.3.0", "Intelephense transitive dependency; postinstall only prints a version-scheme warning; installation keeps scripts disabled"],
+	["onnxruntime-node@1.30.0", "Reviewed script/install.js: CPU binaries ship in the tarball; scripts remain disabled to avoid optional CUDA downloads from NuGet"],
+	["fsevents@2.3.3", "Optional macOS watcher used by the bundled language server; published tarball includes fsevents.node; scripts remain disabled"],
 ]);
 
 const args = new Set(process.argv.slice(2));
